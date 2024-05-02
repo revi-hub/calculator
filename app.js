@@ -13,3 +13,11 @@ function subtract(a, b) {
     else
         return 'ERROR'
 }
+
+function multiply(a, b) {
+    let intA = parseInt(a), intB = parseInt(b);
+    if(!isNaN(intA) &&  !isNaN(intB))
+        return intA * intB;
+    else
+        return 'ERROR'
+}
