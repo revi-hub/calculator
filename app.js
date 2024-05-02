@@ -6,7 +6,7 @@ function add(a, b) {
         return 'ERROR'
 }
 
-function subtract(a, b) {
+function substract(a, b) {
     let intA = parseInt(a), intB = parseInt(b);
     if(!isNaN(intA) &&  !isNaN(intB))
         return intA - intB;
@@ -37,3 +37,4 @@ function divide(a, b) {
 }
 
 let a = null, b = null, operation = null;
+
