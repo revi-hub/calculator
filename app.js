@@ -35,3 +35,5 @@ function divide(a, b) {
     else
         return 'ERROR'
 }
+
+let a = null, b = null, operation = null;
