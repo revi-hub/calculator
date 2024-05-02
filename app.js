@@ -38,3 +38,26 @@ function divide(a, b) {
 
 let a = null, b = null, operation = null;
 
+
+function operate(a, b, operation) {
+    if(a != null && b != null && operation != null) {
+
+        switch (operation) {
+            case '+':
+                return add(a, b);
+                break;
+            case '-':
+                return substract(a, b);
+                break;
+            case '*':
+                return multiply(a, b);
+                break;
+            case '/':
+                return divide(a, b);
+                break;
+        }
+
+    }
+        
+}
+
