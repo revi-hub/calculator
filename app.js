@@ -88,19 +88,23 @@ numpad.addEventListener("click", (event) => {
 
 operations.addEventListener("click", (event) => {
     if(event.target.classList.contains("operation-button")) {
-        if(event.target.innerText == '=') {
-            if(a != null && b != null && operation != null) {
-                let result = operate(a, b, operation);
-                displayText.innerText = result
-                if(typeof result !== "number" || isNaN(result)) {
-                    a = null;
-                    inputting = 'a';
-                } else {
-                    a = result.toString();
-                }
-                b = operation = null;
+        if(a != null && b != null && operation != null) {
+            let result = operate(a, b, operation);
+            displayText.innerText = result
+            if(typeof result !== "number" && isNaN) {
+                a = null;
+                inputting = 'a';
+            } else {
+                a = result.toString();
             }
-        } else { 
+            if(event.target.innerText == '=')
+                b = operation = null;
+            else {
+                b = null;
+                operation = event.target.innerText;
+            } 
+
+        } else {
             operation = event.target.innerText;
             inputting = 'b';
         }
