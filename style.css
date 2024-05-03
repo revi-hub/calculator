@@ -1,0 +1,36 @@
+#calculator {
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 20vw;
+}
+
+#display {
+    background-color: black;
+    display: flex;
+    flex-flow: column;
+    height: 60px;
+    justify-content: center;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    width: 18vw;
+}
+
+#numpad {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 1vw;
+    width: 9vw;
+}
+
+.numpad-button {
+    width: 3vw;
+}
+
+#display-text {
+    color: white;
+    text-align: center;
+}
