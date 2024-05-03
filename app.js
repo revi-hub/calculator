@@ -40,26 +40,22 @@ let a = null, b = null, operation = null, inputting = "a";
 
 
 function operate(a, b, operation) {
-    if(a != null && b != null && operation != null) {
-
-        switch (operation) {
-            case '+':
-                return add(a, b);
-                break;
-            case '-':
-                return substract(a, b);
-                break;
-            case '*':
-                return multiply(a, b);
-                break;
-            case '/':
-                return divide(a, b);
-                break;
-        }
-
+    switch (operation) {
+        case '+':
+            return add(a, b);
+            break;
+        case '-':
+            return substract(a, b);
+            break;
+        case '*':
+            return multiply(a, b);
+            break;
+        case '/':
+            return divide(a, b);
+            break;
     }
-        
 }
+        
 const displayText = document.querySelector("#display-text");
 const numpad = document.querySelector("#numpad");
 const operations = document.querySelector("#operations");
