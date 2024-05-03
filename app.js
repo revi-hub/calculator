@@ -60,4 +60,43 @@ function operate(a, b, operation) {
     }
         
 }
+const displayText = document.querySelector("#display-text");
+const numpad = document.querySelector("#numpad");
+
+numpad.addEventListener("click", (event) => {
+    switch (event.target.innerText) {
+        case '1':
+            displayText.innerText = '1'
+            break;
+        case '2':
+            displayText.innerText = '2'
+            break;
+        case '3':
+            displayText.innerText = '3'
+            break;
+        case '4':
+            displayText.innerText = '4'
+            break;
+        case '5':
+            displayText.innerText = '5'
+            break;
+        case '6':
+            displayText.innerText = '6'
+            break;
+        case '7':
+            displayText.innerText = '7'
+            break;
+        case '8':
+            displayText.innerText = '8'
+            break;
+        case '9':
+            displayText.innerText = '9'
+            break;
+        case '0':
+            displayText.innerText = '0'
+            break;
+        default:
+            break;
+    }
+});
 
