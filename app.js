@@ -1,107 +1,93 @@
-function add(a, b) {
-    let intA = parseInt(a), intB = parseInt(b);
-    if (!isNaN(intA) && !isNaN(intB))
-        return intA + intB;
-    else
-        return 'ERROR'
-}
+let firstOperand = null, secondOperand = null, operation = null, inputting = "firstOperand";
 
-function substract(a, b) {
-    let intA = parseInt(a), intB = parseInt(b);
-    if (!isNaN(intA) && !isNaN(intB))
-        return intA - intB;
-    else
-        return 'ERROR'
-}
-
-function multiply(a, b) {
-    let intA = parseInt(a), intB = parseInt(b);
-    if (!isNaN(intA) && !isNaN(intB))
-        return intA * intB;
-    else
-        return 'ERROR'
-}
-
-function divide(a, b) {
-    let intA = parseInt(a), intB = parseInt(b);
-    if (!isNaN(intA) && !isNaN(intB)) {
-        if (intA == 0 && intB == 0)
-            return 'Result is undefined';
-        else if (intB == 0)
-            return 'Cannot divide by zero';
-        else
-            return intA / intB;
-    }
-    else
-        return 'ERROR'
-}
-
-let a = null, b = null, operation = null, inputting = "a";
-
-
-function operate(a, b, operation) {
-    switch (operation) {
-        case '+':
-            return add(a, b);
-            break;
-        case '-':
-            return substract(a, b);
-            break;
-        case '*':
-            return multiply(a, b);
-            break;
-        case '/':
-            return divide(a, b);
-            break;
-    }
-}
-
-const displayText = document.querySelector("#display-text");
+const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
 const operations = document.querySelector("#operations");
 
+function add(a, b) {
+    return a + b;
+}
+
+function substract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    return a / b;
+}
+
+function operate(a, b, operation) {
+    a = Number(a);
+    b = Number(b);
+    if(!b)
+        return a;
+
+    switch (operation) {
+        case '+':
+            return add(a, b);
+
+        case '-':
+            return substract(a, b);
+
+        case '*':
+            return multiply(a, b);
+
+        case '/':
+            return divide(a, b);
+    }
+}
+
 numpad.addEventListener("click", (event) => {
-    if (event.target.classList.contains("number")) {
-        if (inputting == "a") {
-            if (a == null || a == "0") {
-                a = event.target.innerText;
-                displayText.innerText = event.target.innerText;
+    const buttonClicked = event.target;
+
+    if (buttonClicked.classList.contains("number")) {
+        const buttonNumber = buttonClicked.innerText;
+
+        if (inputting == "firstOperand") {
+            if (firstOperand == null || firstOperand == "0") {
+                firstOperand = buttonNumber;
+                display.innerText = buttonNumber;
+
             } else {
-                a += event.target.innerText;
-                displayText.innerText += event.target.innerText;
+                firstOperand += buttonNumber;
+                display.innerText += buttonNumber;
             }
-        }
-        if (inputting == "b") {
-            if (b == null || b == "0") {
-                b = event.target.innerText;
-                displayText.innerText = event.target.innerText;
+
+        } else if (inputting == "secondOperand") {
+            if (secondOperand == null || secondOperand == "0") {
+                secondOperand = buttonNumber;
+                display.innerText = buttonNumber;
+
             } else {
-                b += event.target.innerText;
-                displayText.innerText += event.target.innerText;
+                secondOperand += buttonNumber;
+                display.innerText += buttonNumber;
             }
         }
     }
 });
 
 operations.addEventListener("click", (event) => {
-    if (event.target.classList.contains("operation-button")) {
-        if (a != null && b != null && operation != null) {
+    const buttonClicked = event.target;
 
-            let result = operate(a, b, operation);
-            displayText.innerText = result
-            if (typeof result !== "number" || isNaN(result)) {
-                a = null;
-                inputting = 'a';
-            } else {
-                a = result.toString();
-            }
-            if (event.target.innerText == '=')
-                b = operation = null;
-            else
-                b = null;
-        } else {
-            operation = event.target.innerText;
-            inputting = 'b';
+    if (event.target.classList.contains("operation-button")) {
+        const buttonOperation = buttonClicked.innerText;
+
+        if(!operation && buttonOperation != "=") {
+            operation = buttonOperation;
+            firstOperand ? inputting = "secondOperand" : inputting = "firstOperand";
+
+        } else if(operation && buttonOperation == "=") {
+            firstOperand = display.innerText =  operate(firstOperand, secondOperand, operation).toString();
+            secondOperand = null;
+            operation = null;
+
+        } else if(operation == buttonOperation && buttonOperation != "=") {
+            firstOperand = display.innerText =  operate(firstOperand, secondOperand, operation).toString();
+            secondOperand = null;
         }
     }
 });
