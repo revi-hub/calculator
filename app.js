@@ -62,6 +62,7 @@ function operate(a, b, operation) {
 }
 const displayText = document.querySelector("#display-text");
 const numpad = document.querySelector("#numpad");
+const operations = document.querySelector("#operations");
 
 numpad.addEventListener("click", (event) => {
     if(event.target.classList.contains("number"))
@@ -84,3 +85,18 @@ numpad.addEventListener("click", (event) => {
             }
         }
     });
+
+operations.addEventListener("click", (event) => {
+    if(event.target.classList.contains("operation-button")) {
+        if(event.target.innerText == '=') {
+            if(a != null && b != null && operation != null) {
+                a = displayText.innerText = operate(a, b, operation);
+                b = operation = null;
+            }
+        } else { 
+            operation = event.target.innerText;
+            inputting = 'b';
+        }
+    }
+        
+});
