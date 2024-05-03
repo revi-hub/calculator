@@ -63,7 +63,7 @@ const operations = document.querySelector("#operations");
 numpad.addEventListener("click", (event) => {
     if(event.target.classList.contains("number")){
         if(inputting == "a") {
-            if(a == null) {
+            if(a == null || a == "0") {
                 a = event.target.innerText;
                 displayText.innerText = event.target.innerText;
             } else {
@@ -71,8 +71,8 @@ numpad.addEventListener("click", (event) => {
                 displayText.innerText += event.target.innerText;
             }
         }
-        if(inputting == "b") {
-            if(b == null) {
+        if(inputting == "b" ) {
+            if(b == null || b == "0") {
                 b = event.target.innerText;
                 displayText.innerText = event.target.innerText;
             } else {
@@ -88,7 +88,7 @@ operations.addEventListener("click", (event) => {
         if(a != null && b != null && operation != null) {
             let result = operate(a, b, operation);
             displayText.innerText = result
-            if(typeof result !== "number" && isNaN) {
+            if(typeof result !== "number" || isNaN(result)) {
                 a = null;
                 inputting = 'a';
             } else {
