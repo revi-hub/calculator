@@ -90,7 +90,14 @@ operations.addEventListener("click", (event) => {
     if(event.target.classList.contains("operation-button")) {
         if(event.target.innerText == '=') {
             if(a != null && b != null && operation != null) {
-                a = displayText.innerText = operate(a, b, operation);
+                let result = operate(a, b, operation);
+                displayText.innerText = result
+                if(typeof result !== "number" || isNaN(result)) {
+                    a = null;
+                    inputting = 'a';
+                } else {
+                    a = result.toString();
+                }
                 b = operation = null;
             }
         } else { 
