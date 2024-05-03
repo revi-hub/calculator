@@ -65,7 +65,7 @@ const numpad = document.querySelector("#numpad");
 const operations = document.querySelector("#operations");
 
 numpad.addEventListener("click", (event) => {
-    if(event.target.classList.contains("number"))
+    if(event.target.classList.contains("number")){
         if(inputting == "a") {
             if(a == null) {
                 a = event.target.innerText;
@@ -84,6 +84,7 @@ numpad.addEventListener("click", (event) => {
                 displayText.innerText += event.target.innerText;
             }
         }
+    }
     });
 
 operations.addEventListener("click", (event) => {
