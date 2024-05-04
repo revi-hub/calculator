@@ -20,6 +20,10 @@ function divide(a, b) {
     return a / b;
 }
 
+function changeMathematicalSign(string) {
+    return string.includes("-") ? string.replace("-", "") : string.padStart(string.length + 1, "-");
+}
+
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
@@ -106,6 +110,28 @@ calculator.addEventListener("click", (event) => {
         secondOperand = null;
         if(inputting == "secondOperand")
             display.innerText = "0"
+    } else if (buttonClicked.id == "change-sign-button") {
+        switch (inputting) {
+            case "firstOperand":
+                const firstOperandInverted = changeMathematicalSign(firstOperand);
+                firstOperand = firstOperandInverted;
+                display.innerText = firstOperand;
+                break;
+            case "secondOperand":
+                if(secondOperand != null) {
+                    const secondOperandInverted = changeMathematicalSign(secondOperand);
+                    secondOperand = secondOperandInverted;
+                    display.innerText = secondOperand;
+                } else {
+                    const firstOperandInverted = changeMathematicalSign(firstOperand);
+                    firstOperand = firstOperandInverted;
+                    display.innerText = firstOperand;
+                }
+                break;
+        
+            default:
+                break;
+        }
     }
 });
 
