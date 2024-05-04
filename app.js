@@ -108,13 +108,19 @@ calculator.addEventListener("click", (event) => {
         inputting = "firstOperand";
 
     } else if (buttonClicked.id == "clear-element-button") {
-        secondOperand = null;
-        if(inputting == "secondOperand")
+        if(secondOperand  == null) {
             display.innerText = "0"
+            operation = null;
+            firstOperand = "0";
+            inputting = "firstOperand"
+        } else {
+            secondOperand = null;
+            display.innerText = "0"
+        }
 
     } else if (buttonClicked.id == "change-sign-button") {
         switch (inputting) {
-            
+
             case "firstOperand":
                 const firstOperandInverted = changeMathematicalSign(firstOperand);
                 firstOperand = firstOperandInverted;
