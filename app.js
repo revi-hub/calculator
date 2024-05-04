@@ -121,7 +121,7 @@ calculator.addEventListener("click", (event) => {
 
     } else if (buttonClicked.id == "change-sign-button") {
             switch (operands[inputting]) {
-                
+
                 case null:
                     const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
                     operands.firstOperand = firstOperandInverted;
@@ -134,7 +134,13 @@ calculator.addEventListener("click", (event) => {
                     display.innerText = operandInverted;
                     break;
             }
-    }
+    } else if (buttonClicked.id == "float-button") {
+        if(operands[inputting] != null && !operands[inputting].includes(".")) {
+            const float = makeFloat(operands[inputting]);
+            operands[inputting] = float;
+            display.innerText = float;
+        }
+        }
 
 });
 
