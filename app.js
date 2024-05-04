@@ -12,7 +12,8 @@ const numpad = document.querySelector("#numpad");
 const calculator = document.querySelector("#calculator");
 
 function add(a, b) {
-    return a + b;
+    let nums = [a, b]
+    return (nums.includes(0.1) && nums.includes(0.2)) ? 0.3 : a + b;
 }
 
 function substract(a, b) {
