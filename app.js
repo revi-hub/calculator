@@ -102,6 +102,10 @@ calculator.addEventListener("click", (event) => {
         secondOperand = null;
         operation = null;
         inputting = "firstOperand";
+    } else if (buttonClicked.id == "clear-element-button") {
+        secondOperand = null;
+        if(inputting == "secondOperand")
+            display.innerText = "0"
     }
 });
 
