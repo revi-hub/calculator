@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <div id="calculator">
-        <div id="display-container">
-            <span id="display">0</span>
-        </div>
+    <div id="frame">
+        <div id="calculator">
+            <div id="display-container">
+                <span id="display">0</span>
+            </div>
             <div id="upper-numpad">
-                <button type="button" id="clear-button">C</button>
-                <button type="button" id="clear-element-button">CE</button>
-                <button type="button" id="clear-element-button">+/-</button>
+                <button type="button" class="numpad-button" id="clear-button">C</button>
+                <button type="button" class="numpad-button" id="clear-element-button">CE</button>
+                <button type="button" class="numpad-button" id="change-sign-button">+/-</button>
+                <button type="button" class="operation-button">+</button>
             </div>
             <div id="numpad">
                 <button type="button" class="numpad-button number">1</button>
@@ -26,17 +35,21 @@
                 <button type="button" class="numpad-button number">7</button>
                 <button type="button" class="numpad-button number">8</button>
                 <button type="button" class="numpad-button number">9</button>
-                <button type="button" class="numpad-button number">0</button>
+                <button type="button" class="numpad-button number" id="zero">0</button>
                 <button type="button" class="numpad-button" id="float-button">.</button>
             </div>
-            <div id="operations">
-                <button type="button" class="operation-button">+</button>
+            <div id="right-bottom-numpad">
                 <button type="button" class="operation-button">-</button>
-                <button type="button" class="operation-button">*</button>
-                <button type="button" class="operation-button">/</button>
+                <button type="button" class="operation-button">×</button>
+                <button type="button" class="operation-button">÷</button>
                 <button type="button" class="operation-button">=</button>
             </div>
+        </div>
+    </div>
+    <div id="link-container">
+        <a href="https://github.com/revi-hub">GitHub</a>
     </div>
     <script src="app.js"></script>
 </body>
+
 </html>

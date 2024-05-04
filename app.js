@@ -2,7 +2,7 @@ let firstOperand = null, secondOperand = null, operation = null, inputting = "fi
 
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
-const operations = document.querySelector("#operations");
+const calculator = document.querySelector("#calculator");
 
 function add(a, b) {
     return a + b;
@@ -33,10 +33,10 @@ function operate(a, b, operation) {
         case '-':
             return substract(a, b);
 
-        case '*':
+        case '×':
             return multiply(a, b);
 
-        case '/':
+        case '÷':
             return divide(a, b);
     }
 }
@@ -70,7 +70,7 @@ numpad.addEventListener("click", (event) => {
     }
 });
 
-operations.addEventListener("click", (event) => {
+calculator.addEventListener("click", (event) => {
     const buttonClicked = event.target;
 
     if (event.target.classList.contains("operation-button")) {
