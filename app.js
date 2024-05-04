@@ -1,4 +1,8 @@
-let firstOperand = "0", secondOperand = null, operation = null, inputting = "firstOperand";
+let operands = {
+    firstOperand : "0",
+    secondOperand : null
+}
+let operation = null, inputting = "firstOperand";
 
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
@@ -22,6 +26,10 @@ function divide(a, b) {
 
 function changeMathematicalSign(string) {
     return string.includes("-") ? string.replace("-", "") : string.padStart(string.length + 1, "-");
+}
+
+function makeFloat(string) {
+    return string.concat(".")
 }
 
 function operate(a, b, operation) {
@@ -55,32 +63,22 @@ numpad.addEventListener("click", (event) => {
     if (buttonClicked.classList.contains("number")) {
         const buttonNumber = buttonClicked.innerText;
 
-        if (inputting == "firstOperand") {
-            if (firstOperand == "0" && operation != null) {
+            if (operands["firstOperand"] == "0" && operation != null) {
                 inputting = "secondOperand";
-                secondOperand = buttonNumber;
-                display.innerText = buttonNumber;
-            } else if (firstOperand == null || firstOperand == "0") {
-                firstOperand = buttonNumber;
+                operands[inputting] = buttonNumber;
                 display.innerText = buttonNumber;
 
-            } else {
-                firstOperand += buttonNumber;
-                display.innerText += buttonNumber;
-            }
-
-        } else if (inputting == "secondOperand") {
-            if (secondOperand == null || secondOperand == "0") {
-                secondOperand = buttonNumber;
+            } else if (!operands[inputting] || operands[inputting] == "0") {
+                operands[inputting] = buttonNumber;
                 display.innerText = buttonNumber;
 
             } else {
-                secondOperand += buttonNumber;
+                operands[inputting] += buttonNumber;
                 display.innerText += buttonNumber;
             }
-        }
     }
 });
+
 calculator.addEventListener("click", (event) => {
     const buttonClicked = event.target;
 
@@ -89,61 +87,54 @@ calculator.addEventListener("click", (event) => {
 
         if(!operation && buttonOperation != "=") {
             operation = buttonOperation;
-            firstOperand ? inputting = "secondOperand" : inputting = "firstOperand";
+            operands["firstOperand"] ? inputting = "secondOperand" : inputting = "firstOperand";
 
         } else if(operation && buttonOperation == "=") {
-            firstOperand = display.innerText =  operate(firstOperand, secondOperand, operation).toString();
-            secondOperand = null;
+            operands["firstOperand"] = display.innerText =  operate(operands.firstOperand, operands.secondOperand, operation).toString();
+            operands["secondOperand"] = null;
             operation = null;
 
         } else if(operation == buttonOperation && buttonOperation != "=") {
-            firstOperand = display.innerText =  operate(firstOperand, secondOperand, operation).toString();
-            secondOperand = null;
+            operands["firstOperand"] = display.innerText =  operate(operands.firstOperand, operands.secondOperand, operation).toString();
+            operands["secondOperand"] = null;
         }
+
     } else if (buttonClicked.id == "clear-button") {
         display.innerText = "0";
-        firstOperand = "0";
-        secondOperand = null;
+        operands["firstOperand"] = "0";
+        operands["secondOperand"] = null;
         operation = null;
         inputting = "firstOperand";
 
     } else if (buttonClicked.id == "clear-element-button") {
-        if(secondOperand  == null) {
+
+        if(operands["secondOperand"]  == null) {
             display.innerText = "0"
             operation = null;
-            firstOperand = "0";
+            operands["firstOperand"] = "0";
             inputting = "firstOperand"
+
         } else {
-            secondOperand = null;
+            operands["secondOperand"] = null;
             display.innerText = "0"
         }
 
     } else if (buttonClicked.id == "change-sign-button") {
-        switch (inputting) {
+            switch (operands[inputting]) {
+                
+                case null:
+                    const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
+                    operands.firstOperand = firstOperandInverted;
+                    display.innerText = firstOperandInverted;
+                    break;
 
-            case "firstOperand":
-                const firstOperandInverted = changeMathematicalSign(firstOperand);
-                firstOperand = firstOperandInverted;
-                display.innerText = firstOperand;
-                break;
-
-            case "secondOperand":
-                if(secondOperand != null) {
-                    const secondOperandInverted = changeMathematicalSign(secondOperand);
-                    secondOperand = secondOperandInverted;
-                    display.innerText = secondOperand;
-
-                } else {
-                    const firstOperandInverted = changeMathematicalSign(firstOperand);
-                    firstOperand = firstOperandInverted;
-                    display.innerText = firstOperand;
-
-                }
-                break;
-        
-            default:
-                break;
-        }
+                default:
+                    const operandInverted = changeMathematicalSign(operands[inputting]);
+                    operands[inputting] = operandInverted;
+                    display.innerText = operandInverted;
+                    break;
+            }
     }
+
 });
 
