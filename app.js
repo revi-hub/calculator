@@ -124,30 +124,30 @@ function handleOperationClick(event) {
             operands["secondOperand"] = "0";
             operation = null;
             inputting = "firstOperand";
-    
+
         } else if (buttonOperation == "Backspace") {
-    
+
             if (operands["secondOperand"] == "0") {
                 display.innerText = "0"
                 operation = null;
                 operands["firstOperand"] = "0";
                 inputting = "firstOperand"
                 history.innerText = "";
-    
+
             } else {
                 operands["secondOperand"] = "0";
                 display.innerText = "0"
             }
-    
+
         } else if (buttonOperation == "!") {
             switch (operands[inputting]) {
-    
+
                 case "0":
                     const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
                     operands.firstOperand = firstOperandInverted;
                     display.innerText = firstOperandInverted;
                     break;
-    
+
                 default:
                     const operandInverted = changeMathematicalSign(operands[inputting]);
                     operands[inputting] = operandInverted;
@@ -165,32 +165,31 @@ function handleOperationClick(event) {
             alert("Saved number to clipboard!")
         } else {
 
-        if (!operation && buttonOperation != "=") {
-            operation = buttonOperation;
-            inputting = "secondOperand";
-            history.innerText = `${operands.firstOperand} ${operation}`
+            if (!operation && buttonOperation != "=") {
+                operation = buttonOperation;
+                inputting = "secondOperand";
+                history.innerText = `${operands.firstOperand} ${operation}`
 
-        } else if (operation && buttonOperation == "=") {
-            history.innerText = `${operands.firstOperand} ${operation} ${operands.secondOperand} =`
-            operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-            operands["secondOperand"] = "0";
-            operation = null;
+            } else if (operation && buttonOperation == "=") {
+                history.innerText = `${operands.firstOperand} ${operation} ${operands.secondOperand} =`
+                operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
+                operands["secondOperand"] = "0";
+                operation = null;
 
-        } else if (operation != null && buttonOperation != null && buttonOperation != "=") {
-            operands["firstOperand"] = operands["secondOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-            operation = buttonOperation;
-            history.innerText = `${operands.firstOperand} ${operation} `
+            } else if (operation != null && buttonOperation != null && buttonOperation != "=") {
+                operands["firstOperand"] = operands["secondOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
+                operation = buttonOperation;
+                history.innerText = `${operands.firstOperand} ${operation} `
+            }
+
         }
 
-    } 
-
-}
+    }
 }
 
 document.addEventListener("keydown", handleNumpadClick)
 
 document.addEventListener("keydown", handleOperationClick)
-
 
 numpad.addEventListener("click", handleNumpadClick);
 
