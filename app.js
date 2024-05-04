@@ -1,4 +1,4 @@
-let firstOperand = null, secondOperand = null, operation = null, inputting = "firstOperand";
+let firstOperand = 0, secondOperand = null, operation = null, inputting = "firstOperand";
 
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
@@ -48,7 +48,11 @@ numpad.addEventListener("click", (event) => {
         const buttonNumber = buttonClicked.innerText;
 
         if (inputting == "firstOperand") {
-            if (firstOperand == null || firstOperand == "0") {
+            if (firstOperand == "0" && operation != null) {
+                inputting = "secondOperand";
+                secondOperand = buttonNumber;
+                display.innerText = buttonNumber;
+            } else if (firstOperand == null || firstOperand == "0") {
                 firstOperand = buttonNumber;
                 display.innerText = buttonNumber;
 
