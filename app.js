@@ -1,6 +1,6 @@
 let operands = {
     firstOperand: "0",
-    secondOperand: null
+    secondOperand: "0"
 }
 let operation = null, inputting = "firstOperand";
 
@@ -36,7 +36,7 @@ function makeFloat(string) {
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
-    if (b == null)
+    if (b == "0")
         return a;
 
     switch (operation) {
@@ -94,7 +94,7 @@ calculator.addEventListener("click", (event) => {
         } else if (operation && buttonOperation == "=") {
             history.innerText = `${operands.firstOperand} ${operation} ${operands.secondOperand} =`
             operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-            operands["secondOperand"] = null;
+            operands["secondOperand"] = "0";
             operation = null;
 
         } else if (operation == buttonOperation && buttonOperation != "=") {
@@ -106,27 +106,27 @@ calculator.addEventListener("click", (event) => {
         display.innerText = "0";
         history.innerText = ``;
         operands["firstOperand"] = "0";
-        operands["secondOperand"] = null;
+        operands["secondOperand"] = "0";
         operation = null;
         inputting = "firstOperand";
 
     } else if (buttonClicked.id == "clear-element-button") {
 
-        if (operands["secondOperand"] == null) {
+        if (operands["secondOperand"] == "0") {
             display.innerText = "0"
             operation = null;
             operands["firstOperand"] = "0";
             inputting = "firstOperand"
 
         } else {
-            operands["secondOperand"] = null;
+            operands["secondOperand"] = "0";
             display.innerText = "0"
         }
 
     } else if (buttonClicked.id == "change-sign-button") {
         switch (operands[inputting]) {
 
-            case null:
+            case "0":
                 const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
                 operands.firstOperand = firstOperandInverted;
                 display.innerText = firstOperandInverted;
@@ -139,7 +139,7 @@ calculator.addEventListener("click", (event) => {
                 break;
         }
     } else if (buttonClicked.id == "float-button") {
-        if (operands[inputting] != null && !operands[inputting].includes(".")) {
+        if (operands[inputting] != "0" && !operands[inputting].includes(".")) {
             const float = makeFloat(operands[inputting]);
             operands[inputting] = float;
             display.innerText = float;
