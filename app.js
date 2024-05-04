@@ -36,8 +36,6 @@ function makeFloat(string) {
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
-    if (b == "0")
-        return a;
 
     switch (operation) {
         case '+':
