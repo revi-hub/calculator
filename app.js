@@ -25,8 +25,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    let result = a / b;
-    return Number.isInteger(result) ? result : result.toPrecision(3);
+    return a / b;
 }
 
 function changeMathematicalSign(string) {
@@ -40,24 +39,27 @@ function makeFloat(string) {
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
+    let result;
 
     switch (operation) {
         case '+':
-            return add(a, b);
-
+            result = add(a, b);
+            break;
         case '-':
-            return substract(a, b);
-
+            result = substract(a, b);
+            break;
         case '×':
-            return multiply(a, b);
-
+            result = multiply(a, b);
+            break;
         case '÷':
             if (b == 0) {
                 alert("Cannot divide by zero!");
                 return a;
             }
-            return divide(a, b);
+            result = divide(a, b);
+            break;
     }
+    return Number.isInteger(result) ? result : result.toPrecision(3)
 }
 
 function translateOperationSigns(string) {
