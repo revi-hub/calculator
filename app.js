@@ -4,6 +4,7 @@ let operands = {
 }
 let operation = null, inputting = "firstOperand";
 
+const history = document.querySelector("#calculations-history")
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
 const calculator = document.querySelector("#calculator");
@@ -87,20 +88,23 @@ calculator.addEventListener("click", (event) => {
 
         if (!operation && buttonOperation != "=") {
             operation = buttonOperation;
-            operands["firstOperand"] ? inputting = "secondOperand" : inputting = "firstOperand";
+            inputting = "secondOperand";
+            history.innerText = `${operands.firstOperand} ${operation}`
 
         } else if (operation && buttonOperation == "=") {
+            history.innerText = `${operands.firstOperand} ${operation} ${operands.secondOperand} =`
             operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
             operands["secondOperand"] = null;
             operation = null;
 
         } else if (operation == buttonOperation && buttonOperation != "=") {
-            operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-            operands["secondOperand"] = null;
+            operands["firstOperand"] = operands["secondOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
+            history.innerText = `${operands.firstOperand} ${operation} `
         }
 
     } else if (buttonClicked.id == "clear-button") {
         display.innerText = "0";
+        history.innerText = ``;
         operands["firstOperand"] = "0";
         operands["secondOperand"] = null;
         operation = null;
