@@ -22,7 +22,8 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    let result = a / b;
+    return Number.isInteger(result) ? result : result.toPrecision(3);
 }
 
 function changeMathematicalSign(string) {
@@ -57,9 +58,14 @@ function operate(a, b, operation) {
 }
 
 function handleNumpadClick(event) {
-    const buttonClicked = event.target;
-    if (buttonClicked.classList.contains("number")) {
-        const buttonNumber = buttonClicked.innerText;
+    let buttonNumber
+    if (Number(event.key) >= 0 && Number(event.key) <= 9) {
+        buttonNumber = event.key;
+    } else if (event.target.classList.contains("number")) {
+        buttonNumber = event.target.innerText;
+    }
+    if (buttonNumber) {
+
 
         if (operands["firstOperand"] == "0" && operation != null) {
             inputting = "secondOperand";
@@ -76,6 +82,7 @@ function handleNumpadClick(event) {
         }
     }
 }
+
 
 function handleOperationClick(event) {
     const buttonClicked = event.target;
@@ -143,12 +150,14 @@ function handleOperationClick(event) {
             operands[inputting] = float;
             display.innerText = float;
         }
-    } else if (buttonClicked.id == "display"){
+    } else if (buttonClicked.id == "display") {
         navigator.clipboard.writeText(display.innerText);
         alert("Saved number to clipboard!")
     }
 
 }
+
+document.addEventListener("keydown", handleNumpadClick)
 
 numpad.addEventListener("click", handleNumpadClick);
 
