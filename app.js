@@ -81,7 +81,7 @@ numpad.addEventListener("click", (event) => {
 calculator.addEventListener("click", (event) => {
     const buttonClicked = event.target;
 
-    if (event.target.classList.contains("operation-button")) {
+    if (buttonClicked.classList.contains("operation-button")) {
         const buttonOperation = buttonClicked.innerText;
 
         if(!operation && buttonOperation != "=") {
