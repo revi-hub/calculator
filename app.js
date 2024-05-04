@@ -77,7 +77,6 @@ numpad.addEventListener("click", (event) => {
         }
     }
 });
-
 calculator.addEventListener("click", (event) => {
     const buttonClicked = event.target;
 
@@ -97,6 +96,12 @@ calculator.addEventListener("click", (event) => {
             firstOperand = display.innerText =  operate(firstOperand, secondOperand, operation).toString();
             secondOperand = null;
         }
+    } else if (buttonClicked.id == "clear-button") {
+        display.innerText = "0";
+        firstOperand = 0;
+        secondOperand = null;
+        operation = null;
+        inputting = "firstOperand";
     }
 });
 
