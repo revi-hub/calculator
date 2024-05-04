@@ -56,9 +56,8 @@ function operate(a, b, operation) {
     }
 }
 
-numpad.addEventListener("click", (event) => {
+function handleNumpadClick(event) {
     const buttonClicked = event.target;
-
     if (buttonClicked.classList.contains("number")) {
         const buttonNumber = buttonClicked.innerText;
 
@@ -76,9 +75,9 @@ numpad.addEventListener("click", (event) => {
             display.innerText += buttonNumber;
         }
     }
-});
+}
 
-calculator.addEventListener("click", (event) => {
+function handleOperationClick(event) {
     const buttonClicked = event.target;
 
     if (buttonClicked.classList.contains("operation-button")) {
@@ -139,12 +138,19 @@ calculator.addEventListener("click", (event) => {
                 break;
         }
     } else if (buttonClicked.id == "float-button") {
-        if (operands[inputting] != "0" && !operands[inputting].includes(".")) {
+        if (!operands[inputting].includes(".")) {
             const float = makeFloat(operands[inputting]);
             operands[inputting] = float;
             display.innerText = float;
         }
+    } else if (buttonClicked.id == "display"){
+        navigator.clipboard.writeText(display.innerText);
+        alert("Saved number to clipboard!")
     }
 
-});
+}
+
+numpad.addEventListener("click", handleNumpadClick);
+
+calculator.addEventListener("click", handleOperationClick);
 

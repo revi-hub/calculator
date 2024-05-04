@@ -114,7 +114,11 @@ button {
 }
 
 #display {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
     font-size: 5rem;
+    cursor: pointer;
 }
 
 #calculations-history {
