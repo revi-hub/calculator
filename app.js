@@ -2,6 +2,8 @@ let operands = {
     firstOperand: "0",
     secondOperand: "0"
 }
+
+let keys = ["*", "/", "+", "-", "=", "*", "Delete", "Backspace", "!", "Enter", "."]
 let operation = null, inputting = "firstOperand";
 
 const history = document.querySelector("#calculations-history")
@@ -57,6 +59,23 @@ function operate(a, b, operation) {
     }
 }
 
+function translateOperationSigns(string) {
+    switch (string) {
+        case "/":
+            return "÷"
+            break;
+        case "*":
+            return "×"
+            break;
+        case "Enter":
+            return "="
+            break;
+        default:
+            return string;
+            break;
+    }
+}
+
 function handleNumpadClick(event) {
     let buttonNumber
     if (Number(event.key) >= 0 && Number(event.key) <= 9) {
@@ -67,12 +86,12 @@ function handleNumpadClick(event) {
     if (buttonNumber) {
 
 
-        if (operands["firstOperand"] == "0" && operation != null) {
+        if ((operands["firstOperand"] == "0" || operands["firstOperand"] == "-0") && operation != null) {
             inputting = "secondOperand";
             operands[inputting] = buttonNumber;
             display.innerText = buttonNumber;
 
-        } else if (!operands[inputting] || operands[inputting] == "0") {
+        } else if (!operands[inputting] || (operands[inputting] == "0" || operands[inputting] == "-0")) {
             operands[inputting] = buttonNumber;
             display.innerText = buttonNumber;
 
@@ -85,10 +104,63 @@ function handleNumpadClick(event) {
 
 
 function handleOperationClick(event) {
-    const buttonClicked = event.target;
+    let buttonOperation
+    if (event.key && keys.includes(event.key)) {
+        buttonOperation = event.key;
+    } else if (event.target.classList.contains("operation")) {
+        buttonOperation = event.target.getAttribute("key");
+        console.log(buttonOperation);
+    }
+    buttonOperation = translateOperationSigns(buttonOperation)
 
-    if (buttonClicked.classList.contains("operation-button")) {
-        const buttonOperation = buttonClicked.innerText;
+    if (buttonOperation) {
+        if (buttonOperation == "Delete") {
+            display.innerText = "0";
+            history.innerText = ``;
+            operands["firstOperand"] = "0";
+            operands["secondOperand"] = "0";
+            operation = null;
+            inputting = "firstOperand";
+    
+        } else if (buttonOperation == "Backspace") {
+    
+            if (operands["secondOperand"] == "0") {
+                display.innerText = "0"
+                operation = null;
+                operands["firstOperand"] = "0";
+                inputting = "firstOperand"
+                history.innerText = "";
+    
+            } else {
+                operands["secondOperand"] = "0";
+                display.innerText = "0"
+            }
+    
+        } else if (buttonOperation == "!") {
+            switch (operands[inputting]) {
+    
+                case "0":
+                    const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
+                    operands.firstOperand = firstOperandInverted;
+                    display.innerText = firstOperandInverted;
+                    break;
+    
+                default:
+                    const operandInverted = changeMathematicalSign(operands[inputting]);
+                    operands[inputting] = operandInverted;
+                    display.innerText = operandInverted;
+                    break;
+            }
+        } else if (buttonOperation == ".") {
+            if (!operands[inputting].includes(".")) {
+                const float = makeFloat(operands[inputting]);
+                operands[inputting] = float;
+                display.innerText = float;
+            }
+        } else if (buttonOperation == "copy") {
+            navigator.clipboard.writeText(display.innerText);
+            alert("Saved number to clipboard!")
+        } else {
 
         if (!operation && buttonOperation != "=") {
             operation = buttonOperation;
@@ -107,57 +179,15 @@ function handleOperationClick(event) {
             history.innerText = `${operands.firstOperand} ${operation} `
         }
 
-    } else if (buttonClicked.id == "clear-button") {
-        display.innerText = "0";
-        history.innerText = ``;
-        operands["firstOperand"] = "0";
-        operands["secondOperand"] = "0";
-        operation = null;
-        inputting = "firstOperand";
+    } 
 
-    } else if (buttonClicked.id == "clear-element-button") {
-
-        if (operands["secondOperand"] == "0") {
-            display.innerText = "0"
-            operation = null;
-            operands["firstOperand"] = "0";
-            inputting = "firstOperand"
-            history.innerText = "";
-
-        } else {
-            operands["secondOperand"] = "0";
-            display.innerText = "0"
-        }
-
-    } else if (buttonClicked.id == "change-sign-button") {
-        switch (operands[inputting]) {
-
-            case "0":
-                const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
-                operands.firstOperand = firstOperandInverted;
-                display.innerText = firstOperandInverted;
-                break;
-
-            default:
-                const operandInverted = changeMathematicalSign(operands[inputting]);
-                operands[inputting] = operandInverted;
-                display.innerText = operandInverted;
-                break;
-        }
-    } else if (buttonClicked.id == "float-button") {
-        if (!operands[inputting].includes(".")) {
-            const float = makeFloat(operands[inputting]);
-            operands[inputting] = float;
-            display.innerText = float;
-        }
-    } else if (buttonClicked.id == "display") {
-        navigator.clipboard.writeText(display.innerText);
-        alert("Saved number to clipboard!")
-    }
-
+}
 }
 
 document.addEventListener("keydown", handleNumpadClick)
+
+document.addEventListener("keydown", handleOperationClick)
+
 
 numpad.addEventListener("click", handleNumpadClick);
 

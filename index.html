@@ -18,13 +18,13 @@
         <div id="calculator">
             <div id="display-container">
                 <span class = "display-text" id="calculations-history"></span>
-                <span class = "display-text" id="display">0</span>
+                <span class = "display-text" key="copy" id="display">0</span>
             </div>
             <div id="upper-numpad">
-                <button type="button" class="numpad-button" id="clear-button">C</button>
-                <button type="button" class="numpad-button" id="clear-element-button">CE</button>
-                <button type="button" class="numpad-button" id="change-sign-button">+/-</button>
-                <button type="button" class="operation-button">+</button>
+                <button type="button" key="Delete" class="operation numpad-button" id="clear-button">C</button>
+                <button type="button" key="Backspace" class="operation numpad-button" id="clear-element-button">CE</button>
+                <button type="button" key="!" class="operation numpad-button" id="change-sign-button">+/-</button>
+                <button type="button" key="+" class="operation operation-button">+</button>
             </div>
             <div id="numpad">
                 <button type="button" class="numpad-button number">1</button>
@@ -37,13 +37,13 @@
                 <button type="button" class="numpad-button number">8</button>
                 <button type="button" class="numpad-button number">9</button>
                 <button type="button" class="numpad-button number" id="zero">0</button>
-                <button type="button" class="numpad-button" id="float-button">.</button>
+                <button type="button" key="." class="operation numpad-button" id="float-button">.</button>
             </div>
             <div id="right-bottom-numpad">
-                <button type="button" class="operation-button">-</button>
-                <button type="button" class="operation-button">×</button>
-                <button type="button" class="operation-button">÷</button>
-                <button type="button" class="operation-button">=</button>
+                <button type="button" key="-" class="operation operation-button">-</button>
+                <button type="button" key="*" class="operation operation-button">×</button>
+                <button type="button" key="/" class="operation operation-button">÷</button>
+                <button type="button" key="="class="operation operation-button">=</button>
             </div>
         </div>
     </div>
