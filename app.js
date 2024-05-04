@@ -97,8 +97,9 @@ calculator.addEventListener("click", (event) => {
             operands["secondOperand"] = "0";
             operation = null;
 
-        } else if (operation == buttonOperation && buttonOperation != "=") {
+        } else if (operation != null && buttonOperation != null && buttonOperation != "=") {
             operands["firstOperand"] = operands["secondOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
+            operation = buttonOperation;
             history.innerText = `${operands.firstOperand} ${operation} `
         }
 
