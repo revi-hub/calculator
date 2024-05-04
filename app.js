@@ -23,7 +23,7 @@ function divide(a, b) {
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
-    if(!b)
+    if(b == null)
         return a;
 
     switch (operation) {
@@ -37,6 +37,10 @@ function operate(a, b, operation) {
             return multiply(a, b);
 
         case '÷':
+            if(b == 0) {
+                alert("Cannot divide by zero!");
+                return a;
+            }
             return divide(a, b);
     }
 }
