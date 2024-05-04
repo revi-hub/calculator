@@ -116,6 +116,7 @@ calculator.addEventListener("click", (event) => {
             operation = null;
             operands["firstOperand"] = "0";
             inputting = "firstOperand"
+            history.innerText = "";
 
         } else {
             operands["secondOperand"] = "0";
