@@ -59,7 +59,7 @@ function operate(a, b, operation) {
             result = divide(a, b);
             break;
     }
-    return Number.isInteger(result) ? result : result.toPrecision(3)
+    return Number.isInteger(result) ? result : result.toPrecision()
 }
 
 function translateOperationSigns(string) {
