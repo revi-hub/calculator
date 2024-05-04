@@ -1,4 +1,4 @@
-let firstOperand = 0, secondOperand = null, operation = null, inputting = "firstOperand";
+let firstOperand = "0", secondOperand = null, operation = null, inputting = "firstOperand";
 
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
@@ -98,7 +98,7 @@ calculator.addEventListener("click", (event) => {
         }
     } else if (buttonClicked.id == "clear-button") {
         display.innerText = "0";
-        firstOperand = 0;
+        firstOperand = "0";
         secondOperand = null;
         operation = null;
         inputting = "firstOperand";
