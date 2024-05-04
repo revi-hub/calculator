@@ -108,10 +108,17 @@ button {
     width: 9.7vw;
 }
 
-#display {
+.display-text {
     color: #e9e2d5;
-    font-size: 5rem;
     text-align: right;
+}
+
+#display {
+    font-size: 5rem;
+}
+
+#calculations-history {
+    font-size: 1.5rem;
 }
 
 #link-container {
