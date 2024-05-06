@@ -64,11 +64,11 @@ let audio = [];
 
 for(let i = 1; i <= 18; i++) {
     audio.push(new Audio(`audio/click${i}.ogg`));
-    audio[i-1].volume = 1.0
 }
 
 function playSound(audio) {
-    let randomNumber = Math.floor(Math.random() * 19);
+    let randomNumber = Math.floor(Math.random() * 18);
+    console.log(randomNumber);
     audio[randomNumber].play();
 }
 
