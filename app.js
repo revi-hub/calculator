@@ -68,7 +68,6 @@ for(let i = 1; i <= 18; i++) {
 
 function playSound(audio) {
     let randomNumber = Math.floor(Math.random() * 18);
-    console.log(randomNumber);
     audio[randomNumber].play();
 }
 
