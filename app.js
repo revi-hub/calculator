@@ -87,7 +87,7 @@ function handleCalculator(event) {
     if (!isNaN(buttonKey)) {
         playSound(audio);
         if (canReset) {
-            (operands[currentOperand] == "0") ? canReset = false : canReset = true;
+            canReset = false;
             if (currentOperand == "firstOperand") {
                 secondOperand = null
                 history.textContent = "";
