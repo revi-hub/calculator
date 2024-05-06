@@ -41,7 +41,7 @@ button {
     background-color: #44443c;
     display: flex;
     flex-flow: column;
-    height: 19vw;
+    height: 18vw;
     justify-content: end;
     width: 20vw;
 }
