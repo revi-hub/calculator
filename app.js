@@ -68,6 +68,19 @@ function operate(a, b, operation) {
     return roundResultToString(result);
 }
 
+let audio = [];
+
+for(let i = 1; i <= 18; i++) {
+    audio.push(new Audio(`audio/click${i}.ogg`));
+    audio[i-1].volume = 1.0
+}
+
+function playSound(audio) {
+    let randomNumber = Math.floor(Math.random() * 19);
+    audio[randomNumber].play();
+}
+
+
 let previousOperandValue = null
 function handleCalculator(event) {
     let buttonKey;
@@ -80,6 +93,7 @@ function handleCalculator(event) {
     }
 
     if (!isNaN(buttonKey)) {
+        playSound(audio);
         if (canReset) {
             (operands[currentOperand] == "0") ? canReset = false : canReset = true;
             if (currentOperand == "firstOperand") {
@@ -95,6 +109,7 @@ function handleCalculator(event) {
         }
 
     } else if (operations.includes(buttonKey)) {
+        playSound(audio);
         if (buttonKey == "=") {
             let result;
             if (!operands.secondOperand && operator) {
@@ -134,6 +149,7 @@ function handleCalculator(event) {
             currentOperand = "secondOperand";
         }
     } else if (buttonKey == "Delete") {
+        playSound(audio);
         display.textContent = "0";
         history.textContent = "";
         operands.firstOperand = "0";
@@ -143,11 +159,13 @@ function handleCalculator(event) {
         previousOperandValue = null;
         canReset = true;
     } else if (buttonKey == "Backspace") {
+        playSound(audio);
         display.textContent = "0";
         operands[currentOperand] = "0"
         previousOperandValue = null;
         canReset = true;
     } else if (buttonKey == "!") {
+        playSound(audio);
         previousOperandValue = null;
         history.textContent = `negate(${operands[currentOperand]})`
         operands[currentOperand] = (-Number(operands[currentOperand])).toString();
@@ -156,6 +174,7 @@ function handleCalculator(event) {
         navigator.clipboard.writeText(event.target.textContent);
         alert("Saved to clipboard!");
     } else if (buttonKey == ".") {
+        playSound(audio);
         if (!operands[currentOperand].includes(".")) {
             operands[currentOperand] += "."
             display.textContent += "."
