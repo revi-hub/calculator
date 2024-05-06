@@ -28,7 +28,6 @@ body {
 }
 
 button {
-    background-color: #66a397;
     border-radius: 12px;
     border-width: 0px;
     color: #e9e2d5;
@@ -47,36 +46,36 @@ button {
     width: 20vw;
 }
 
-#numpad {
+#bottom-left {
     display: flex;
     flex-wrap: wrap;
     width: 15vw;
 }
 
-#numpad > button {
+.purple {
     background-color: #624bea;
     transition: background-color 0.2s 0s;
 }
 
-#numpad > button:hover {
+.purple:hover {
     background-color: #7763eb;
 }
 
-.numpad-button {
+button {
     font-size: 2.5rem;
     font-variant-position: super;
     height: 4vw;
     width: 4.7vw;
 }
 
-#upper-numpad {
+#top {
     display: flex;
     flex-flow: row;
     flex-wrap: nowrap;
     width: 20vw;
 }
 
-.operation-button {
+.pink {
     background-color: #e2819d;
     font-size: 3rem;
     height: 4vw;
@@ -84,20 +83,20 @@ button {
     width: 4.7vw;
 }
 
-.operation-button:hover {
+.pink:hover {
     background-color: #e2a3b5;
 }
 
-#upper-numpad > .numpad-button{
+.magenta{
     background-color: #ce78c6;
     transition: background-color 0.2s 0s;
 }
 
-#upper-numpad > .numpad-button:hover {
+.magenta:hover {
     background-color: #d49ecf;
 }
 
-#right-bottom-numpad {
+#bottom-right {
     display: flex;
     flex-wrap: wrap;
     height: 4vw;
