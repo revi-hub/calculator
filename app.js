@@ -1,18 +1,20 @@
 let operands = {
     firstOperand: "0",
-    secondOperand: "0"
+    secondOperand: null
 }
+let canReset = true;
 
-let keys = ["*", "/", "+", "-", "=", "*", "Delete", "Backspace", "!", "Enter", "."]
-let operation = null, inputting = "firstOperand";
 
-const history = document.querySelector("#calculations-history")
+let operations = ["*", "/", "+", "-", "="]
+let operator = null, currentOperand = "firstOperand";
+
+const history = document.querySelector("#calculations-history");
 const display = document.querySelector("#display");
 const numpad = document.querySelector("#numpad");
 const calculator = document.querySelector("#calculator");
 
 function add(a, b) {
-    let nums = [a, b]
+    let nums = [a, b];
     return (nums.includes(0.1) && nums.includes(0.2)) ? 0.3 : a + b;
 }
 
@@ -36,6 +38,10 @@ function makeFloat(string) {
     return string.concat(".")
 }
 
+function roundResultToString(number) {
+    return (Math.round(number * 1000) / 1000).toString();
+}
+
 function operate(a, b, operation) {
     a = Number(a);
     b = Number(b);
@@ -48,10 +54,10 @@ function operate(a, b, operation) {
         case '-':
             result = substract(a, b);
             break;
-        case '×':
+        case '*':
             result = multiply(a, b);
             break;
-        case '÷':
+        case '/':
             if (b == 0) {
                 alert("Cannot divide by zero!");
                 return a;
@@ -59,139 +65,107 @@ function operate(a, b, operation) {
             result = divide(a, b);
             break;
     }
-    return Number.isInteger(result) ? result : result.toPrecision()
+    return roundResultToString(result);
 }
 
-function translateOperationSigns(string) {
-    switch (string) {
-        case "/":
-            return "÷"
-            break;
-        case "*":
-            return "×"
-            break;
-        case "Enter":
-            return "="
-            break;
-        default:
-            return string;
-            break;
+let previousOperandValue = null
+function handleCalculator(event) {
+    let buttonKey;
+    if (event.target.hasAttribute("key")) {
+        buttonKey = event.target.getAttribute("key");
+    } else if (event.key) {
+        buttonKey = event.key;
+    } else {
+        return null;
     }
-}
 
-function handleNumpadClick(event) {
-    let buttonNumber
-    if (Number(event.key) >= 0 && Number(event.key) <= 9) {
-        buttonNumber = event.key;
-    } else if (event.target.classList.contains("number")) {
-        buttonNumber = event.target.innerText;
-    }
-    if (buttonNumber) {
+    if (!isNaN(buttonKey)) {
+        if (canReset) {
+            (operands[currentOperand] == "0") ? canReset = false : canReset = true;
+            if (currentOperand == "firstOperand") {
+                secondOperand = null
+                history.textContent = "";
+            }
+            operands[currentOperand] = buttonKey;
+            display.textContent = buttonKey;
 
-
-        if ((operands["firstOperand"] == "0" || operands["firstOperand"] == "-0") && operation != null) {
-            inputting = "secondOperand";
-            operands[inputting] = buttonNumber;
-            display.innerText = buttonNumber;
-
-        } else if (!operands[inputting] || (operands[inputting] == "0" || operands[inputting] == "-0")) {
-            operands[inputting] = buttonNumber;
-            display.innerText = buttonNumber;
-
-        } else {
-            operands[inputting] += buttonNumber;
-            display.innerText += buttonNumber;
+        } else if (!canReset && (operands[currentOperand] != "0")) {
+            operands[currentOperand] += buttonKey;
+            display.textContent += buttonKey;
         }
-    }
-}
 
-
-function handleOperationClick(event) {
-    let buttonOperation
-    if (event.key && keys.includes(event.key)) {
-        buttonOperation = event.key;
-    } else if (event.target.classList.contains("operation")) {
-        buttonOperation = event.target.getAttribute("key");
-        console.log(buttonOperation);
-    }
-    buttonOperation = translateOperationSigns(buttonOperation)
-
-    if (buttonOperation) {
-        if (buttonOperation == "Delete") {
-            display.innerText = "0";
-            history.innerText = ``;
-            operands["firstOperand"] = "0";
-            operands["secondOperand"] = "0";
-            operation = null;
-            inputting = "firstOperand";
-
-        } else if (buttonOperation == "Backspace") {
-
-            if (operands["secondOperand"] == "0") {
-                display.innerText = "0"
-                operation = null;
-                operands["firstOperand"] = "0";
-                inputting = "firstOperand"
-                history.innerText = "";
-
+    } else if (operations.includes(buttonKey)) {
+        if (buttonKey == "=") {
+            let result;
+            if (!operands.secondOperand && operator) {
+                previousOperandValue = previousOperandValue == null ? operands.firstOperand : previousOperandValue
+                result = operate(operands.firstOperand, previousOperandValue, operator);
+                history.textContent = `${operands.firstOperand} ${operator} ${previousOperandValue} =`
+                currentOperand = "firstOperand"
+            }
+            else if (operands.secondOperand && operator) {
+                result = operate(operands.firstOperand, operands.secondOperand, operator);
+                history.textContent = `${operands.firstOperand} ${operator} ${operands.secondOperand} =`
+                currentOperand = "firstOperand";
+                operator = null;
+                operands.secondOperand = null;
+                previousOperandValue = null;
+            }
+            else if (!operands.secondOperand && !operator) {
+                history.textContent = `${operands.firstOperand} =`
+                result = operands.firstOperand;
+            }
+            operands.firstOperand = result;
+            display.textContent = result;
+            canReset = true
+        } else {
+            if (operator && operands.secondOperand) {
+                result = operate(operands.firstOperand, operands.secondOperand, operator);
+                history.textContent = `${result} ${buttonKey}`
+                operands.firstOperand = result;
+                display.textContent = result;
+                operands.secondOperand = null;
+                previousOperandValue = null;
             } else {
-                operands["secondOperand"] = "0";
-                display.innerText = "0"
+                history.textContent = `${operands.firstOperand} ${buttonKey}`
             }
-
-        } else if (buttonOperation == "!") {
-            switch (operands[inputting]) {
-
-                case "0":
-                    const firstOperandInverted = changeMathematicalSign(operands.firstOperand);
-                    operands.firstOperand = firstOperandInverted;
-                    display.innerText = firstOperandInverted;
-                    break;
-
-                default:
-                    const operandInverted = changeMathematicalSign(operands[inputting]);
-                    operands[inputting] = operandInverted;
-                    display.innerText = operandInverted;
-                    break;
-            }
-        } else if (buttonOperation == ".") {
-            if (!operands[inputting].includes(".")) {
-                const float = makeFloat(operands[inputting]);
-                operands[inputting] = float;
-                display.innerText = float;
-            }
-        } else if (buttonOperation == "copy") {
-            navigator.clipboard.writeText(display.innerText);
-            alert("Saved number to clipboard!")
-        } else {
-
-            if (!operation && buttonOperation != "=") {
-                operation = buttonOperation;
-                inputting = "secondOperand";
-                history.innerText = `${operands.firstOperand} ${operation}`
-
-            } else if (operation && buttonOperation == "=") {
-                history.innerText = `${operands.firstOperand} ${operation} ${operands.secondOperand} =`
-                operands["firstOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-                operands["secondOperand"] = "0";
-                operation = null;
-
-            } else if (operation != null && buttonOperation != null && buttonOperation != "=") {
-                operands["firstOperand"] = operands["secondOperand"] = display.innerText = operate(operands.firstOperand, operands.secondOperand, operation).toString();
-                operation = buttonOperation;
-                history.innerText = `${operands.firstOperand} ${operation} `
-            }
-
+            canReset = true;
+            operator = buttonKey;
+            currentOperand = "secondOperand";
         }
-
+    } else if (buttonKey == "Delete") {
+        display.textContent = "0";
+        history.textContent = "";
+        operands.firstOperand = "0";
+        operands.secondOperand = null;
+        currentOperand = "firstOperand";
+        operator = null;
+        previousOperandValue = null;
+        canReset = true;
+    } else if (buttonKey == "Backspace") {
+        display.textContent = "0";
+        operands[currentOperand] = "0"
+        previousOperandValue = null;
+        canReset = true;
+    } else if (buttonKey == "!") {
+        previousOperandValue = null;
+        history.textContent = `negate(${operands[currentOperand]})`
+        operands[currentOperand] = (-Number(operands[currentOperand])).toString();
+        display.textContent = operands[currentOperand];
+    } else if (buttonKey == "copy") {
+        navigator.clipboard.writeText(event.target.textContent);
+        alert("Saved to clipboard!");
+    } else if (buttonKey == ".") {
+        if (!operands[currentOperand].includes(".")) {
+            operands[currentOperand] += "."
+            display.textContent += "."
+            canReset = false;
+        }
     }
 }
 
-document.addEventListener("keydown", handleNumpadClick)
 
-document.addEventListener("keydown", handleOperationClick)
+document.addEventListener("keydown", handleCalculator)
 
-numpad.addEventListener("click", handleNumpadClick);
-
-calculator.addEventListener("click", handleOperationClick);
+calculator.addEventListener("click", handleCalculator);
 
