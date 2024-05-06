@@ -10,7 +10,6 @@ let operator = null, currentOperand = "firstOperand";
 
 const history = document.querySelector("#calculations-history");
 const display = document.querySelector("#display");
-const numpad = document.querySelector("#numpad");
 const calculator = document.querySelector("#calculator");
 
 function add(a, b) {
