@@ -13,8 +13,7 @@ const display = document.querySelector("#display");
 const calculator = document.querySelector("#calculator");
 
 function add(a, b) {
-    let nums = [a, b];
-    return (nums.includes(0.1) && nums.includes(0.2)) ? 0.3 : a + b;
+    return a + b;
 }
 
 function substract(a, b) {
@@ -29,13 +28,7 @@ function divide(a, b) {
     return a / b;
 }
 
-function changeMathematicalSign(string) {
-    return string.includes("-") ? string.replace("-", "") : string.padStart(string.length + 1, "-");
-}
 
-function makeFloat(string) {
-    return string.concat(".")
-}
 
 function roundResultToString(number) {
     return (Math.round(number * 1000) / 1000).toString();
